@@ -1,26 +1,84 @@
 const form = document.getElementById("formSurat");
 const suratDiv = document.getElementById("surat");
+const tbody = document.querySelector("#petugasTable tbody");
 
-// Event saat form di-submit
+// Tambah baris petugas
+function addRow() {
+  let row = document.createElement("tr");
+  row.innerHTML = `
+    <td><input type="text" placeholder="Nama PK / APK"></td>
+    <td><input type="text" placeholder="NIP"></td>
+    <td><input type="text" placeholder="Nama Klien"></td>
+    <td><input type="text" placeholder="Perkara"></td>
+    <td><input type="text" placeholder="Keterangan"></td>
+    <td><input type="date"></td>
+    <td><input type="text" placeholder="Tempat"></td>
+    <td><button type="button" onclick="this.closest('tr').remove()">Hapus</button></td>
+  `;
+  tbody.appendChild(row);
+}
+
+// Event submit form
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const nama = document.getElementById("nama").value;
-  const nip = document.getElementById("nip").value;
-  const jabatan = document.getElementById("jabatan").value;
-  const tujuan = document.getElementById("tujuan").value;
-  const tanggal = document.getElementById("tanggal").value;
+  const nomor = document.getElementById("nomorSurat").value;
+  const tanggal = document.getElementById("tanggalSurat").value;
+  const kepala = document.getElementById("kepalaBapas").value;
+  const menimbang = document.getElementById("menimbang").value;
+  const dasar = document.getElementById("dasar").value;
+
+  // Ambil daftar petugas
+  let petugasHTML = "";
+  [...tbody.rows].forEach((row, i) => {
+    const cells = row.querySelectorAll("input");
+    petugasHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${cells[0].value} <br>NIP. ${cells[1].value}</td>
+        <td>${cells[2].value}</td>
+        <td>${cells[3].value}</td>
+        <td>${cells[4].value}</td>
+        <td>${cells[5].value}</td>
+        <td>${cells[6].value}</td>
+      </tr>
+    `;
+  });
 
   suratDiv.innerHTML = `
+    <div style="text-align:center; font-weight:bold;">
+      KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN REPUBLIK INDONESIA <br>
+      DIREKTORAT JENDERAL PEMASYARAKATAN <br>
+      KANTOR WILAYAH KEPULAUAN RIAU <br>
+      BALAI PEMASYARAKATAN KELAS II BATAM <br>
+      <small>Jl. Trans Barelang KM2 Tembesi Batam | Surel: Bapas2batam@gmail.com</small>
+      <hr>
+    </div>
     <h2 style="text-align:center">SURAT TUGAS</h2>
-    <p>Yang bertanda tangan di bawah ini, menugaskan kepada:</p>
-    <p><b>Nama:</b> ${nama}<br>
-    <b>NIP:</b> ${nip}<br>
-    <b>Jabatan:</b> ${jabatan}</p>
-    <p>Untuk melaksanakan tugas: ${tujuan}</p>
-    <p>Pada tanggal: ${tanggal}</p>
-    <br><br>
-    <p style="text-align:right">Mengetahui,<br>Kepala Instansi</p>
+    <p style="text-align:center">Nomor : ${nomor}</p>
+    <p><b>Menimbang:</b><br>${menimbang}</p>
+    <p><b>Dasar:</b><br>${dasar}</p>
+    <p><b>MENUGASKAN :</b></p>
+    <p>Kepada: Daftar Nama Jabatan Fungsional (terlampir)</p>
+    <p>Untuk: Melaksanakan Penelitian Kemasyarakatan sesuai ketentuan.</p>
+    <p style="text-align:right; margin-top:40px;">
+      Batam, ${tanggal} <br>
+      Kepala Bapas Kelas II Batam,<br><br><br>
+      <b>${kepala}</b>
+    </p>
+    <h3 style="text-align:center; margin-top:40px;">Lampiran - Daftar Litmas Anak Binaan</h3>
+    <table border="1" style="width:100%; border-collapse:collapse;">
+      <tr>
+        <th>No</th>
+        <th>Nama PK / APK</th>
+        <th>Nama Klien</th>
+        <th>Perkara</th>
+        <th>Keterangan</th>
+        <th>Waktu</th>
+        <th>Tempat</th>
+      </tr>
+      ${petugasHTML}
+    </table>
   `;
 });
 
