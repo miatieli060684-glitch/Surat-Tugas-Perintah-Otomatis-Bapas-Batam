@@ -1,0 +1,41 @@
+const form = document.getElementById("formSurat");
+const suratDiv = document.getElementById("surat");
+
+// Event saat form di-submit
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const nama = document.getElementById("nama").value;
+  const nip = document.getElementById("nip").value;
+  const jabatan = document.getElementById("jabatan").value;
+  const tujuan = document.getElementById("tujuan").value;
+  const tanggal = document.getElementById("tanggal").value;
+
+  suratDiv.innerHTML = `
+    <h2 style="text-align:center">SURAT TUGAS</h2>
+    <p>Yang bertanda tangan di bawah ini, menugaskan kepada:</p>
+    <p><b>Nama:</b> ${nama}<br>
+    <b>NIP:</b> ${nip}<br>
+    <b>Jabatan:</b> ${jabatan}</p>
+    <p>Untuk melaksanakan tugas: ${tujuan}</p>
+    <p>Pada tanggal: ${tanggal}</p>
+    <br><br>
+    <p style="text-align:right">Mengetahui,<br>Kepala Instansi</p>
+  `;
+});
+
+// Download PDF
+function downloadPDF() {
+  var element = document.getElementById("surat");
+  html2pdf().from(element).save("SuratTugas.pdf");
+}
+
+// Download Word
+function downloadWord() {
+  const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+                 "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+                 "xmlns='http://www.w3.org/TR/REC-html40'>";
+  const source = header + "<body>" + document.getElementById("surat").innerHTML + "</body></html>";
+  const sourceBlob = new Blob([source], { type: 'application/msword' });
+  saveAs(sourceBlob, 'SuratTugas.doc');
+}

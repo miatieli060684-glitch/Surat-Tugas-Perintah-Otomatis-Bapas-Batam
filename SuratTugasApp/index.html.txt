@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Generator Surat Tugas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Generator Surat Tugas</h1>
+
+  <!-- Form Input -->
+  <form id="formSurat">
+    <label>Nama Pegawai</label>
+    <input type="text" id="nama" required>
+
+    <label>NIP</label>
+    <input type="text" id="nip" required>
+
+    <label>Jabatan</label>
+    <input type="text" id="jabatan" required>
+
+    <label>Tujuan Tugas</label>
+    <textarea id="tujuan" required></textarea>
+
+    <label>Tanggal</label>
+    <input type="date" id="tanggal" required>
+
+    <button type="submit">Buat Surat</button>
+  </form>
+
+  <hr>
+
+  <!-- Hasil Surat -->
+  <div id="surat" class="surat"></div>
+
+  <!-- Tombol Download -->
+  <div class="actions">
+    <button onclick="downloadPDF()">Download PDF</button>
+    <button onclick="downloadWord()">Download Word</button>
+  </div>
+
+  <!-- Library export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <!-- Script JS -->
+  <script src="script.js"></script>
+</body>
+</html>
